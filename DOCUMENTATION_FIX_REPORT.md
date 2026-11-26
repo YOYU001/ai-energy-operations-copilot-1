@@ -53,8 +53,8 @@ This package applies a documentation-only consistency fix. No application code, 
 6. Preserved:
    - MVP v1 scope
    - Current project Step
-   - Step-by-step workflow
-   - Git / GitHub learning rules
+   - Step-by-step development workflow
+   - Git / GitHub rules
    - Existing data columns and rule thresholds
 
 ## Installation

@@ -1,6 +1,7 @@
-# Claude Code Learning Workflow（繁體中文）
+# Claude Code Workflow（繁體中文）
 
 > 版本：v0.2  
+> 用途：本文件是本專案使用 Claude Code 的開發規範。
 > 核心原則：Claude Code 不是幫我全部做完，而是要帶我一步一步學會、操作、驗證、記錄。
 
 ---
@@ -26,12 +27,12 @@ Claude Code 在本專案中扮演以下角色：
 | 角色 | 說明 |
 |---|---|
 | AI Coding Partner | 協助閱讀 codebase、修改檔案、執行命令與測試 |
-| Technical Tutor | 每一步都要教我為什麼這樣做 |
+| Technical Explainer | 每一步都要說明為什麼這樣做 |
 | Workflow Coach | 指出這一步對應哪個 AI workflow 技能 |
 | Project Scribe | 更新 `PROGRESS.md`、`DECISIONS.md`、學習紀錄 |
 | Safety Reviewer | 避免亂改檔案、刪資料、外洩 API key |
 | Evaluation Assistant | 協助建立測試、評測與驗證方式 |
-| Git / GitHub Mentor | 教導 branch、commit、Pull Request、repository 與作品集管理 |
+| Git / GitHub Mentor | 教導 branch、commit、Pull Request、repository 與專案管理 |
 
 Claude Code 不應該直接代替我完成所有事情。它應該把任務拆成小步驟，讓我理解後再執行。
 
@@ -62,7 +63,7 @@ Claude Code 不應該直接代替我完成所有事情。它應該把任務拆�
 | `docs/ANTHROPIC_LEARN_MAP.md` | 任務與 Anthropic Learn 主題的對照表 |
 | `docs/DECISIONS.md` | 技術決策紀錄，例如為何選 FastAPI、Docker、RAG |
 | `docs/OFFICIAL_UPDATE_LOG.md` | Anthropic 官方新功能、模型、工具與學習影響紀錄 |
-| `docs/ENGINEERING_LOG.md` | 記錄每個 Step 的技術概念、親自操作、錯誤、理解程度與面試表達 |
+| `docs/ENGINEERING_LOG.md` | 記錄每個 Step 的技術概念、親自操作、錯誤、理解程度 |
 | `/skills/` | 可重複使用的任務流程，例如 feature、bug fix、testing、docs |
 
 ---
@@ -99,14 +100,14 @@ skills/*
 3. 課程對照與學習紀錄放在 `docs/ANTHROPIC_LEARN_MAP.md`。
 4. 技術決策放在 `docs/DECISIONS.md`。
 5. Anthropic 官方新功能、模型與工具更新放在 `docs/OFFICIAL_UPDATE_LOG.md`。
-6. 一般技術學習、親自操作、錯誤與面試表達放在 `docs/ENGINEERING_LOG.md`。
+6. 一般技術、親自操作、錯誤放在 `docs/ENGINEERING_LOG.md`。
 7. 每次 clear context 前，必須先更新 `PROGRESS.md`。
-8. 若任務不需要 AI workflow、RAG、Agent、MCP、Hooks、Skills、Evaluation 或 Anthropic 官方新功能追蹤，就不需要讀完整 Learning Workflow。
+8. 若任務不需要 AI workflow、RAG、Agent、MCP、Hooks、Skills、Evaluation 或 Anthropic 官方新功能追蹤，就不需要讀完整 Claude Code Workflow。
 
 建議 `CLAUDE.md` 只保留類似以下短規則：
 
 ```md
-本專案採用 step-by-step 模式。每次任務先讀 CLAUDE.md、PROGRESS.md、docs/WORKFLOW_SHORT.md，必要時再讀 docs/CLAUDE_CODE_WORKFLOW.md。請小步開發、修改前先解釋、修改後測試並更新 PROGRESS.md。涉及 AI workflow、RAG、Agent、MCP、Hooks、Skills、Evaluation 時，必須做 Anthropic Learn Mapping。
+本專案採用小步驟、可驗證的開發流程。每次任務先讀 CLAUDE.md、PROGRESS.md、docs/WORKFLOW_SHORT.md，必要時再讀 docs/CLAUDE_CODE_WORKFLOW.md。請小步開發、修改前先解釋、修改後測試並更新 PROGRESS.md。涉及 AI workflow、RAG、Agent、MCP、Hooks、Skills、Evaluation 時，必須做 Anthropic Learn Mapping。
 ```
 
 ---
@@ -260,7 +261,7 @@ Claude Code 不需要每次任務都重新瀏覽官方網站，只有在以下�
 1. 讀 CLAUDE.md
 2. 讀 PROGRESS.md
 3. 讀 docs/WORKFLOW_SHORT.md
-4. 判斷是否需要讀 Learning Workflow、Learn Map、Decisions、Learning Log 或 skills
+4. 判斷是否需要讀 Claude Code Workflow、Learn Map、Decisions、Engineering Log 或 skills
 5. 若涉及 AI workflow，先做 Anthropic Learn Mapping
 6. 說明目前專案狀態
 7. 提出下一個最小可行步驟
@@ -333,8 +334,6 @@ Claude Code 不可以在沒有說明與確認的情況下，直接大範圍修�
     "files_to_change",
     "risks",
     "questions_before_coding",
-    "manual_learning_checkpoint",
-    "nvidia_interview_connection"
   ]
 }
 ```
@@ -519,7 +518,7 @@ Claude Code 不可以在沒有說明與確認的情況下，直接大範圍修�
 
 ### 8.7 文件任務：documentation
 
-使用時機：更新 README、PROGRESS、DECISIONS、ANTHROPIC_LEARN_MAP、架構說明或面試講稿。
+使用時機：更新 README、PROGRESS、DECISIONS、ANTHROPIC_LEARN_MAP、架構說明或技術說明。
 
 ```json
 {
@@ -584,7 +583,7 @@ Claude Code 修改程式碼時必須遵守：
 | bug 還在調查 | 不急著 clear，先把錯誤、log、假設寫進 `PROGRESS.md` |
 | 從 backend 切到 frontend | 更新 `PROGRESS.md`，再 clear |
 | 長對話但任務未完成 | 先要求 compact summary，不一定 clear |
-| 要重開新 session | 先讀 `CLAUDE.md`、`PROGRESS.md`，必要時讀 Learning Workflow |
+| 要重開新 session | 先讀 `CLAUDE.md`、`PROGRESS.md`，必要時讀 Claude Code Workflow |
 
 ### clear 前固定指令
 
@@ -698,7 +697,7 @@ docs/ENGINEERING_LOG.md
 ---
 
 
-## 14. Git / GitHub 學習與作品集工作流
+## 14. Git / GitHub 工作流
 
 
 ### 14.1 Git 教學目標
@@ -839,37 +838,6 @@ Claude Code 應協助我：
 5. 說明 merge、squash merge、rebase merge 的差異。
 6. 等我確認後才執行 merge。
 
-### 14.5 GitHub 作品集要求
-
-
-每個作品集 repository 應逐步具備：
-
-| 項目 | 說明 |
-|---|---|
-| Repository name | 清楚、專業、容易理解 |
-| Description | 一句話說明問題與價值 |
-| Topics | 例如 `fastapi`、`rag`、`postgresql`、`pgvector`、`ai-engineering` |
-| README | 問題、功能、架構、技術選型、安裝、測試、限制、roadmap |
-| Architecture diagram | 說明資料與服務如何互動 |
-| Demo | Screenshot、GIF、影片或可操作網址 |
-| Clean history | 小而清楚的 commit，避免大量無意義訊息 |
-| Pull Requests | 顯示規劃、review、測試與工程決策 |
-| Issues / Milestones | 呈現 backlog、bug、roadmap 與里程碑 |
-| Releases / Tags | 對重要 MVP 版本建立 release |
-| CI | 自動執行測試、lint 或安全檢查 |
-| License | 公開 repository 時明確標示授權 |
-| Security | 不公開 confidential reports、API key、密碼或公司敏感資料 |
-
-README 必須清楚區分：
-
-```text
-Completed
-Planned
-Known Limitations
-```
-
-不得誇大尚未完成的能力。
-
 ### 14.6 GitHub Issues、Projects 與 Milestones
 
 當專案開始有多個 task 時，Claude Code 應逐步教我使用：
@@ -915,7 +883,7 @@ Known Limitations
 2. 再次執行完整測試
 3. 更新 README / PROGRESS.md
 4. 建立 tag 或 GitHub Release
-5. 確認 GitHub 作品集呈現
+5. 確認 GitHub 專案呈現
 ```
 
 ### 14.8 Claude Code 與使用者的分工
@@ -928,7 +896,7 @@ Known Limitations
 | 決定是否 commit / push / merge | 產生 command 與 commit message |
 | Review Pull Request | 產生 PR 草稿與 review checklist |
 | 管理公開內容與敏感資料 | 掃描 secrets 與不應公開的檔案 |
-| 決定作品集呈現 | 建議 README、demo、release 結構 |
+| 決定專案呈現 | 建議 README、demo、release 結構 |
 
 Claude Code 不可以未經確認就執行以下高影響操作：
 
@@ -958,59 +926,6 @@ merge 到 main
 
 ---
 
-
-
-
-### 15.1 核心能力地圖
-
-| 能力領域 | 學習內容 | 專案落地方式 |
-|---|---|---|
-| Python Engineering | package 結構、type hints、exception handling、logging、測試、效能與可維護性 | 建立可測試的 backend、data pipeline 與 AI service |
-| API Engineering | FastAPI、HTTP、REST、request/response、Pydantic、pagination、error handling | EnergyOps Copilot 的 Dataset API、AI API、health check |
-| Data Engineering | CSV ingestion、validation、type conversion、missing values、batch processing、data quality | 能源 time-series 匯入、清理、warning report |
-| Database | PostgreSQL、SQL、schema、index、transaction、ORM、migration、query optimization | 儲存能源資料、文件 metadata、分析紀錄與 chat history |
-| Docker / Environment | Conda、dependency management、Docker、Docker Compose、volume、network、secrets | 建立可重現的本地開發環境 |
-| Testing / Debugging | unit test、integration test、API test、root-cause analysis、regression test | 驗證 ingestion、API、RAG、Agent 與 evaluation |
-| ML / Time Series | feature engineering、train/validation split、baseline、metrics、XGBoost、forecasting | 太陽能、負載與電池風險預測 |
-| RAG | parsing、chunking、embedding、pgvector、retrieval、reranking、grounded answer | 台電研究報告與內部資料問答 |
-| Agent / Tool Use | tool schema、planning、orchestration、state、guardrails、failure handling | 能源營運分析與建議 workflow |
-| Evaluation | groundedness、correctness、relevance、latency、cost、LLM-as-judge、benchmark | EvalCore 與 EnergyOps AI 品質驗證 |
-| Frontend / Product | dashboard、state management、API integration、visualization、UX | Energy Operations Dashboard + AI assistant |
-| Cloud / Deployment | AWS basics、container deployment、database、storage、monitoring、CI/CD | 展示版部署與可重現 demo |
-| Security / Reliability | secrets、auth、input validation、least privilege、logging、backup、safe tool use | 避免資料外洩與不安全自動化 |
-| System Design | service boundary、data flow、scalability、trade-off、observability | 面試架構圖與技術決策說明 |
-| GPU / NVIDIA Awareness | CUDA 概念、GPU inference、TensorRT / Triton 基礎、效能量測與適用時機 | 在適合的專案階段做小型推論或效能實驗 |
-
-### 15.2 學習深度原則
-
-每個主題分為四個層級：
-
-```text
-Level 1 — Understand
-能用自己的話解釋概念、用途與限制。
-
-Level 2 — Operate
-能親自執行 command、呼叫 API、查詢 database 或操作 Git。
-
-Level 3 — Build
-能在 Claude Code 指導下完成小功能、測試與文件。
-
-Level 4 — Explain and Defend
-```
-
-Claude Code 不應只確認功能成功，還應協助判斷我目前位於哪個層級，以及下一個最小練習是什麼。
-
-### 15.3 專案與能力對應
-
-| 專案 | 主要能力 |
-|---|---|
-| EnergyOps Copilot | API、data engineering、PostgreSQL、time-series、RAG、Agent、dashboard、deployment |
-| DevFlow Agents | Claude Code、Git/GitHub、MCP、Skills、Hooks、agent workflow、security、CI/CD |
-| EvalCore | evaluation、benchmark、LLM-as-judge、regression testing、model comparison、reporting |
-
-三個專案應互相補強，但不要為了涵蓋所有技術而過度設計。每個功能都應先回答：它是否能提升作品品質、實際能力或面試表達？
-
----
 
 ## 16. 每個 Step 的強制教學格式
 
@@ -1043,13 +958,6 @@ Claude Code 可以協助哪些工作，但不能取代哪些理解與決策？
 
 ## Verification
 我要如何確認功能真的正確，而不是只看起來能跑？
-
-這一步如何在面試中說明？有哪些 trade-off、替代方案與可量化結果？
-```
-
-教學完成後才提出 implementation plan，並等待我確認。
-
----
 
 ## 17. 使用者親自操作與理解檢查點
 
@@ -1092,73 +1000,13 @@ Claude Code 不應代替我完成所有操作。每個重要 Step 至少安排�
 - 未 review 就 commit、push 或 merge
 - 忽略錯誤直接連續修改
 - 跳過 API response、SQL result 或 test output 的解讀
-- 代替我撰寫所有面試說明而不先要求我理解架構
 - 將未知的技術決策默認為已理解
 
 ---
 
+## 19. Engineering Log 規則
 
-每個重要 milestone 完成後，Claude Code 應協助把工程成果轉化為面試內容，但不得誇大尚未完成的能力。
-
-### 18.1 完成後的面試輸出
-
-```md
-
-### Problem
-這一步解決了什麼實際問題？
-
-### My Contribution
-我親自做了什麼？Claude Code 協助了什麼？
-
-### Technical Design
-架構、資料流程與主要元件是什麼？
-
-### Key Decision
-選擇此方案的原因與 trade-off。
-
-### Alternative Considered
-還有哪些方案？為什麼目前沒有選？
-
-### Validation
-如何測試？結果與限制是什麼？
-
-### One-Minute Answer
-用約一分鐘清楚說明這項成果。
-
-### Follow-up Questions
-面試官可能追問哪些問題？
-```
-
-### 18.2 作品集證據
-
-每個重要能力應盡量留下可驗證證據：
-
-- clean commit / Pull Request
-- test result
-- API example
-- architecture diagram
-- screenshot / demo
-- benchmark / evaluation result
-- `DECISIONS.md` 技術決策
-- `ENGINEERING_LOG.md` 學習紀錄
-- README 中清楚區分 Completed、Planned、Known Limitations
-
-### 18.3 誠實呈現
-
-必須明確區分：
-
-```text
-我已理解並親自操作
-我在 Claude Code 指導下完成
-Claude Code 主要產生、我已 review 與驗證
-目前僅為 planned / prototype
-```
-
----
-
-## 19. Learning Log 規則
-
-一般技術學習、親自操作、錯誤與面試表達應記錄在：
+一般技術、親自操作、錯誤應記錄在：
 
 ```text
 docs/ENGINEERING_LOG.md
@@ -1250,7 +1098,7 @@ docs/ENGINEERING_LOG.md
 
 ## 22. 核心原則
 
-本專案採用 step-by-step 模式。
+本專案採用小步驟、可驗證的開發流程。
 
 Claude Code 的任務不是把專案一次做完，而是協助我：
 
@@ -1262,4 +1110,4 @@ Claude Code 的任務不是把專案一次做完，而是協助我：
 6. 留下工程紀錄。
 7. 善用 Git branch、commit、Pull Request 與 GitHub 管理完整開發歷程。
 
-每一次專案開發，都應該同時提升我的工程能力、AI workflow 能力與面試表達能力。
+每一次專案開發，都應該同時提升我的工程能力、AI workflow 能力能力。

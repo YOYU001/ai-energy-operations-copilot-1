@@ -1,5 +1,6 @@
-# Learning Log
+# Engineering Log
 
+> 用途：記錄每個 Step 的技術決策、實際操作、錯誤診斷與驗證結果。  
 > 原則：只記真正理解、親自操作或完成驗證的內容；工程進度放在 `PROGRESS.md`，Anthropic 課程對照放在 `ANTHROPIC_LEARN_MAP.md`。
 
 ---
@@ -17,11 +18,11 @@
 | Level 1 — Understand | 能用自己的話解釋概念與用途 |
 | Level 2 — Operate | 能親自執行 command 或操作工具 |
 | Level 3 — Build | 能在指導下完成小功能、測試與文件 |
-| Level 4 — Explain and Defend | 能在面試中說明設計、trade-off、替代方案與驗證 |
+| Level 4 — Explain and Defend | 能說明設計、trade-off、替代方案與驗證 |
 
 ---
 
-## Learning Index
+## Log Index
 
 | Date | Project | Step / Topic | Skill Area | Level | Status |
 |---|---|---|---|---|---|
@@ -91,19 +92,12 @@
 #### What Still Needs Practice
 - 
 
-- Problem：
-- My contribution：
-- Technical decision：
-- Trade-off：
-- Validation：
-- One-minute answer：
-
 #### Next Learning Step
 - 
 
 ---
 
-## Completed Learning Entries
+## Completed Entries
 
 <!-- Claude Code 應把新的學習紀錄加在此區塊下方，最新日期放前面。 -->
 
@@ -135,7 +129,7 @@
 #### What Claude Code Assisted With
 - 撰寫 `datasets_queries.py`、`schemas.py`、`main.py` 的實際程式碼，`FakeConnection`/`FakeResult` 測試替身，以及 query 層、HTTP 層共 30 個新測試。
 - 執行 pytest、啟動/關閉臨時測試用 server、執行 curl 驗收並回報結果。
-- 統整四個端點的整體架構、request flow 與面試講法。
+- 統整四個端點的整體架構、request flow。
 
 #### Files I Can Explain
 | File | 我目前能解釋的內容 |
@@ -184,13 +178,6 @@
 - 親自執行 pytest / curl 並獨立判讀輸出（尤其是失敗案例的 debug）
 - 親自寫一個新的 query function 並補上對應的三層測試（query test / API test / curl）
 - Git / GitHub 基礎操作（規劃為獨立 Step）
-
-- Problem：Step 4 之後資料寫得進去、讀不出來，Dashboard 與規則引擎都無法接上。
-- My contribution：規劃並審閱四個 read-only 端點的設計，主動抓出並要求修正欄位數量錯誤、circular import 風險、排序 NULL 處理等細節。
-- Technical decision：用 dependency override 取代真實 test database，在 MVP 階段用最小成本換取完整 HTTP 層測試覆蓋率。
-- Trade-off：犧牲了「測試對真實資料庫行為的保證」，換取「不需要維護額外測試基礎設施」；用手動 curl 補足這個缺口。
-- Validation：36 個 pytest 全數通過 + curl 驗收涵蓋 200/404/422 全部路徑。
-- One-minute answer：見本次 Step 5 Teaching phase 的英文面試簡介段落。
 
 #### Next Learning Step
 - Step 6：Frontend Foundation（尚未開始）。

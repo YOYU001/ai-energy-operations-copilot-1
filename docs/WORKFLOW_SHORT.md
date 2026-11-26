@@ -1,28 +1,30 @@
 # Claude Code Workflow Short Version
 
 > 用途：本文件是 Claude Code 每次 session 與每個新任務的快速執行規則。  
+> 原則：保留最重要的開發流程、Git、測試與紀錄要求；完整細節請讀 `docs/CLAUDE_CODE_WORKFLOW.md`。
 
 ---
 
 ## 1. 核心原則
 
-本專案採用 **step-by-step** 模式。Claude Code 不是單純代寫工具，而是：
+本專案採用 **小步驟、可驗證** 的開發模式。Claude Code 不是單純代寫工具，而是：
 
 - AI coding partner
 - Technical explainer
 - Workflow coach
-- Git / GitHub mentor
+- Git / GitHub reviewer
 - Safety reviewer
 - Evaluation assistant
 
-每次任務都依照「Execution and Teaching Must Be Separate」定義的 7 步驟流程進行：
+每次任務都依照「Execution and Walkthrough Must Be Separate」定義的 7 步驟流程進行：
 
-1. 先理解目前狀態，提出簡短 plan（不展開教學）。
+1. 先理解目前狀態，提出簡短 plan（不展開說明）。
 2. 等使用者確認後才進入 Execution phase。
 3. Execution phase：完成修改。
 4. 執行測試 / 驗證。
-5. 提供 execution report，更新 `PROGRESS.md`；重要學習更新 `docs/ENGINEERING_LOG.md`。
-6. 等使用者確認後才進入 Teaching phase。
+5. 提供 execution report，更新 `PROGRESS.md`；重要工程紀錄更新 `docs/ENGINEERING_LOG.md`。
+6. 等使用者確認後才進入 Walkthrough phase。
+7. Walkthrough phase：依 Step Walkthrough 格式說明本次變更、設計取捨與驗證結果。
 
 涉及 AI workflow 時另外做 Anthropic Learn Mapping；重要功能使用正確的 Git branch / commit / Pull Request 流程。
 
@@ -61,17 +63,18 @@ skills/*
 使用時機：
 
 - 任務涉及 RAG、Agent、MCP、Hooks、Skills、Evaluations、Prompt Caching。
-- 任務涉及 AI 模型/工具評測、NVIDIA NeMo Evaluator、RAG Evaluation、Agent Evaluation、Performance Benchmarking（讀 `docs/AI_EVALUATION_ROADMAP.md`）。
+- 任務涉及 AI 模型/工具評測、NeMo Evaluator、RAG Evaluation、Agent Evaluation、Performance Benchmarking（讀 `docs/AI_EVALUATION_ROADMAP.md`）。
 - 任務涉及 Anthropic 官方最新模型、產品或 Claude Code 更新。
 - 建立新模組、重要 feature、複雜 bug、refactor 或 milestone。
+- 需要完整 Git / GitHub 規則。
 - 要 clear context 前做 handoff。
-- Claude Code 開始偏題、跳過教學或一次做太多時。
+- Claude Code 開始偏題、跳過說明或一次做太多時。
 
 ---
 
 ## 4. Step Walkthrough
 
-每一個 development Step、feature、bug fix 或重要技術概念，都要依照以下順序教學。這是唯一的教學格式，取代舊版「Learning Goal / Architecture Role / Key Concepts / Commands I Must Run / Common Pitfalls / Verification」清單。
+每一個 development Step、feature、bug fix 或重要技術概念，都要依照以下順序說明。這是唯一的說明格式，取代舊版「Learning Goal / Architecture Role / Key Concepts / Commands I Must Run / Common Pitfalls / Verification」清單。
 
 1. **Life Example**：先用生活化例子說明這一步在做什麼，再進入技術內容。
 2. **What We Changed**：說明專案實際建立或修改了哪些檔案，每個檔案的用途、必要性、彼此連接方式，並說明這一步在整體 architecture 與 data flow 中的位置（原「Architecture Role」併入本項）。
@@ -79,58 +82,58 @@ skills/*
 4. **Important Code Walkthrough**：只挑最重要的 function、code block 或 data flow，展示短程式碼並逐段解釋重要變數、function、input、output、return value、資料如何流動。不逐行解釋全部程式碼，也不只講抽象概念。
 5. **Why This Design**：說明解決什麼問題、為什麼採用目前做法、為什麼不選其他做法、有哪些 trade-off、為什麼適合 MVP。
 6. **What Errors Look Like**：說明常見 error message 或錯誤結果、可能原因、第一個應檢查的位置、不應該如何連續亂修（原「Common Pitfalls」併入本項）。
-7. **My Manual Practice**：每個重要 Step 至少安排一項由使用者親自完成的操作。Claude Code 必須先說明 command 或操作的用途，讓使用者親自執行，等使用者貼回結果，再協助判讀，不可以代替使用者完成全部高價值學習操作。
 
-Step Walkthrough 只在 Teaching phase 使用（見「Execution and Teaching Must Be Separate」的 7 步驟流程第 7 步）。Execution phase 不使用這套格式，只做修改、測試、驗證與回報。
+Step Walkthrough 只在 Walkthrough phase 使用（見「Execution and Walkthrough Must Be Separate」的 7 步驟流程第 7 步）。Execution phase 不使用這套格式，只做修改、測試、驗證與回報。
 
 ### 適用範圍
 
-Step Walkthrough 必須套用在：Step 1–4 重新教學、Step 5 之後的所有 development Step、Git / GitHub、FastAPI、PostgreSQL / SQL、Docker、data ingestion、RAG、Agent、Evaluation、frontend、AWS / deployment。
+Step Walkthrough 必須套用在：Step 1–4 重新說明、Step 5 之後的所有 development Step、Git / GitHub、FastAPI、PostgreSQL / SQL、Docker、data ingestion、RAG、Agent、Evaluation、frontend、AWS / deployment。
 
 ### 真實狀態規則
 
-教學時必須清楚區分：目前專案實際已完成、建議未來採用、尚未實作、只屬於 planned / prototype。不可以把建議流程描述成已完成事實。
+說明時必須清楚區分：目前專案實際已完成、建議未來採用、尚未實作、只屬於 planned / prototype。不可以把建議流程描述成已完成事實。
 
 ### 文件定位
 
-這段規則保持簡短；完整解釋可指向 `docs/CLAUDE_CODE_WORKFLOW.md`。日常教學必須直接依照本文件執行，不能因為沒有讀完整版就跳過 Step Walkthrough。
+這段規則保持簡短；完整解釋可指向 `docs/CLAUDE_CODE_WORKFLOW.md`。日常說明必須直接依照本文件執行，不能因為沒有讀完整版就跳過 Step Walkthrough。
 
 ---
 
-## Execution and Teaching Must Be Separate
+## Execution and Walkthrough Must Be Separate
 
 之後每個 development Step、feature、bug fix、refactor 或重要任務，都只依照以下**唯一一套正式流程**進行，不可以混合、不可以新增第三套流程：
 
 ```text
-1. 簡短 plan（不展開教學）
+1. 簡短 plan（不展開說明）
 2. 使用者確認
 3. Execution phase（完成修改）
 4. test / verification
 5. execution report
 6. 使用者確認
-7. Teaching phase（Step Walkthrough，見第 4 節）
+7. Walkthrough phase（Step Walkthrough，見第 4 節）
 ```
 
 ### Step 1–2：Plan 與確認
 
-先說明本次要做什麼、會修改哪些檔案，不展開完整教學、生活化比喻或面試說法。等使用者確認後才進入 Execution phase。
+先說明本次要做什麼、會修改哪些檔案，不展開完整說明或生活化比喻。等使用者確認後才進入 Execution phase。
 
 ### Step 3–5：Execution、Verification、Report
 
-Execution phase 只做：修改、執行測試或驗證、回報實際結果、更新必要文件（例如 `PROGRESS.md`）。不穿插長篇教學或額外課程內容。完成後停下來，提供 execution report，等待使用者確認。
+Execution phase 只做：修改、執行測試或驗證、回報實際結果、更新必要文件（例如 `PROGRESS.md`）。不穿插長篇說明或額外課程內容。完成後停下來，提供 execution report，等待使用者確認。
 
-### Step 6–7：確認後進入 Teaching phase
+### Step 6–7：確認後進入 Walkthrough phase
 
+使用者確認要開始說明後，才依 Step Walkthrough（第 4 節）的順序說明：Life Example → What We Changed → Real Input and Output → Important Code Walkthrough → Why This Design → What Errors Look Like。
 
 ### Required Behavior
 
-- 執行前可以做簡短說明與 plan，但不要展開完整教學。
+- 執行前可以做簡短說明與 plan，但不要展開完整說明。
 - 執行中專注完成任務與驗證。
 - 執行完成後先提供 execution report。
-- 等使用者確認要開始教學，或依任務規則進入 teaching phase。
-- 不要一邊修改檔案，一邊穿插大量教學內容。
+- 等使用者確認要開始說明，或依任務規則進入 teaching phase。
+- 不要一邊修改檔案，一邊穿插大量說明內容。
 - 不要把尚未執行完成的內容當成已完成案例來教。
-- 教學必須以實際完成的 code、file、input、output、test result 為基礎。
+- 說明必須以實際完成的 code、file、input、output、test result 為基礎。
 
 ### Purpose
 
@@ -218,11 +221,11 @@ Ignore for now
 4. 判斷是否需要讀完整版、Learn Map、Decisions、Learning Log 或 Skills。
 5. 確認目前 Git branch 與 working tree 狀態。
 6. 若涉及 AI workflow，先做 Anthropic Learn Mapping。
-7. 說明目前專案狀態，提出簡短 plan（列出會修改的檔案、風險與驗證方式，不展開教學）。
+7. 說明目前專案狀態，提出簡短 plan（列出會修改的檔案、風險與驗證方式，不展開說明）。
 8. 等使用者確認後才進入 Execution phase。
 9. 完成修改，執行 test / verification。
 10. 提供 execution report，更新必要文件。
-11. 等使用者確認後才進入 Teaching phase（見「Execution and Teaching Must Be Separate」）。
+11. 等使用者確認後才進入 Walkthrough phase（見「Execution and Walkthrough Must Be Separate」）。
 
 ---
 
@@ -301,7 +304,7 @@ merge 到 main
 7. 不刪資料、不清空 database、不暴露 API key。
 8. 重要修改更新 `PROGRESS.md`。
 9. 重大決策更新 `docs/DECISIONS.md`。
-10. 重要學習更新 `docs/ENGINEERING_LOG.md`。
+10. 重要工程紀錄更新 `docs/ENGINEERING_LOG.md`。
 
 ---
 
@@ -326,32 +329,7 @@ What still needs practice
 Git / GitHub practice
 ```
 
-工程進度放 `PROGRESS.md`，一般學習放 `ENGINEERING_LOG.md`，Anthropic 課程對應放 `ANTHROPIC_LEARN_MAP.md`。
-
----
-
-
-三個作品集應逐步建立以下能力：
-
-```text
-Python Engineering
-FastAPI / API Design
-PostgreSQL / SQL / Data Engineering
-Docker / Environment
-Git / GitHub / CI
-Testing / Debugging
-Machine Learning / Time Series
-RAG / Embedding / Vector Search
-Agent / Tool Use / MCP
-Evaluation / Benchmark
-Frontend / Dashboard
-AWS / Deployment
-Security / Reliability
-System Design
-GPU inference / NVIDIA ecosystem awareness
-```
-
-不要為了涵蓋所有技術而 overbuild；每一步都要能提升實作能力、作品品質或面試表達。
+工程進度放 `PROGRESS.md`，工程紀錄放 `ENGINEERING_LOG.md`，Anthropic 課程對應放 `ANTHROPIC_LEARN_MAP.md`。
 
 ---
 
@@ -375,7 +353,6 @@ GPU inference / NVIDIA ecosystem awareness
 1. 功能或修正完成。
 2. 測試或驗證完成。
 3. Claude Code 說明修改內容。
-4. 使用者完成至少一項親自操作或理解確認。
 5. `PROGRESS.md` 已更新。
 6. 需要時更新 `DECISIONS.md`。
 7. 需要時更新 `ANTHROPIC_LEARN_MAP.md`。
@@ -418,3 +395,4 @@ Claude Code 不可以只是把功能做完。
 
 它必須協助使用者理解：
 
+> 為什麼要做、怎麼設計、怎麼操作、怎麼驗證、如何使用 Git 管理，以及有哪些設計取捨。

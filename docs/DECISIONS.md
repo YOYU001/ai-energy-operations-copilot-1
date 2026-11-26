@@ -229,7 +229,7 @@ Any future Step that introduces document/case versioning or retention enforcemen
 
 #### Context
 
-Full context: `docs/PROJECT_ALIGNMENT_REVIEW.md` (Decision Log #12, #13). `docs/MVP1_RULES.md` section 8 already defined an answer structure (`Finding / Evidence / Possible cause / Suggested action / Confidence`) before this review. The review's interview surfaced a more specific requirement: the AI must clearly separate confirmed case-specific facts from LLM-supplied general engineering background knowledge, and must not present a guess as a confirmed cause when evidence is insufficient.
+Full context: `docs/PROJECT_ALIGNMENT_REVIEW.md` (Decision Log #12, #13). `docs/MVP1_RULES.md` section 8 already defined an answer structure (`Finding / Evidence / Possible cause / Suggested action / Confidence`) before this review. The review surfaced a more specific requirement: the AI must clearly separate confirmed case-specific facts from LLM-supplied general engineering background knowledge, and must not present a guess as a confirmed cause when evidence is insufficient.
 
 #### Decision
 

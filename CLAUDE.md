@@ -109,23 +109,23 @@ python -m spike.run_retrieval_benchmark
 
 系統預設只能使用內部資料回答：uploaded documents、imported CSV datasets、case records、built-in MVP rules。這是為了讓每個回答都能追溯到可驗證的內部來源，避免使用者誤信未經查證的內容。若內部資料不足，須明確告知使用者「資料不足」，並具體說明還需要哪些資料或文件才能回答，而不是依常識或訓練知識推測作答。
 
-## Learning Mode / Teaching Role
+## Step Walkthrough / Explanation Role
 
-本專案採用 step-by-step 模式，詳見 `docs/CLAUDE_CODE_WORKFLOW.md`。Claude Code 在本專案中同時是 coding assistant 與 **technical explainer**。
+本專案採用小步驟、可驗證的開發流程，詳見 `docs/CLAUDE_CODE_WORKFLOW.md`。Claude Code 在本專案中同時是 coding assistant 與 **technical explainer**。
 
-**每個 Step 開始前**：先用繁體中文完整教學，涵蓋目的、在整體專案中的角色、會用到的技術概念、會修改的檔案與各自職責、設計理由、常見陷阱、與下一步的連接。教學完成後提出 implementation plan（依 `docs/DEVELOPMENT_WORKFLOW.md` 格式），等待使用者確認後才可修改檔案。
+**每個 Step 開始前**：先用繁體中文完整說明，涵蓋目的、在整體專案中的角色、會用到的技術概念、會修改的檔案與各自職責、設計理由、常見陷阱、與下一步的連接。說明完成後提出 implementation plan（依 `docs/DEVELOPMENT_WORKFLOW.md` 格式），等待使用者確認後才可修改檔案。
 
 **實作時**：保持小步驟，一次只做一小範圍；修改前說明準備做什麼，修改後說明改了什麼。
 
-**每個 Step 完成後**：除 `docs/DEVELOPMENT_WORKFLOW.md` 的標準回報格式（files changed / implemented / how to run / how to test / known limitations / next recommended step）外，額外附上：What you learned、Key concepts explained、Common pitfalls、How this connects to the next step。
+**每個 Step 完成後**：除 `docs/DEVELOPMENT_WORKFLOW.md` 的標準回報格式（files changed / implemented / how to run / how to test / known limitations / next recommended step）外，額外附上：Key concepts explained、Common pitfalls、How this connects to the next step。
 
 **衝突處理**：任務與 `docs/CLAUDE_CODE_WORKFLOW.md`、`docs/DEVELOPMENT_WORKFLOW.md`、`docs/MVP1_RULES.md` 或本檔案衝突時，先停下並詢問使用者取得裁示後再繼續，因為這些文件代表使用者對流程的明確共識，單方面判斷容易偏離已溝通過的方向。
 
-**語言規則**：教學與說明文字使用繁體中文；技術指令、檔名、API endpoint、package/function name 保持英文，同一段落避免中英文過度混用。回覆重點清楚、避免冗長，使用者要求詳細教學時再展開。
+**語言規則**：說明文字使用繁體中文；技術指令、檔名、API endpoint、package/function name 保持英文，同一段落避免中英文過度混用。回覆重點清楚、避免冗長，使用者要求詳細教學時再展開。
 
 ## 開發規則
 
-每次只做一小步，因為本專案採 step-by-step 模式，小步驟能讓使用者每次都能看懂並確認變更，也能在出錯時快速定位是哪一步造成的。修改前先說明這一步要做什麼、預計修改哪些檔案、有哪些假設或風險。修改後回報 files changed / what was implemented / how to run/test / known limitations / next recommended step，且新增或修改的 pytest 測試須全數通過（exit code 0）才算完成這一步。只修改任務相關檔案，僅實作已討論過的功能，保持模組化以利未來分支擴充。
+每次只做一小步，因為小步驟能讓使用者每次都能看懂並確認變更，也能在出錯時快速定位是哪一步造成的。修改前先說明這一步要做什麼、預計修改哪些檔案、有哪些假設或風險。修改後回報 files changed / what was implemented / how to run/test / known limitations / next recommended step，且新增或修改的 pytest 測試須全數通過（exit code 0）才算完成這一步。只修改任務相關檔案，僅實作已討論過的功能，保持模組化以利未來分支擴充。
 
 遇到測試失敗或程式錯誤時，先診斷根因並具體說明給使用者確認後才能動手修改，不可為了讓測試通過而直接調整測試預期或蒙混掉實際的 bug——測試預期本身代表的是不變量（例如某個函式該被呼叫幾次），改動它必須是因為需求真的變了，不是因為當下的實作不符預期。
 

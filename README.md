@@ -1,279 +1,161 @@
 # AI Energy Operations Copilot
 
-AI Energy Operations Copilot 是一個面向能源營運場景的 MVP 專案，目標是建立一套結合 **Energy Operations Dashboard** 與 **AI Copilot** 的智慧能源分析系統。
+An AI copilot for energy operations teams. It combines an operations dashboard with a grounded AI assistant that answers questions from internal documents, imported time-series data and past incident cases, so every answer can be traced back to a source.
 
-本專案重點展示 AI engineering、RAG、能源資料分析、rule-based decision support、系統設計與前後端整合能力。
+It covers solar PV, EMS, battery storage scheduling, anomaly diagnosis, similar-case search, cost estimation and a Green Operations Index, built as a full-stack application with Next.js, FastAPI and PostgreSQL + pgvector.
 
----
-
-## 1. Project Goal
-
-本專案的 MVP v1 目標是建立一個可展示的能源營運助手，協助使用者：
-
-- 查看太陽光電、負載、儲能與電價資料
-- 分析能源異常事件
-- 產生 rule-based 儲能排程建議
-- 估算尖離峰電價、超約風險與綠電浪費
-- 透過 RAG 查詢內部能源研究文件
-- 以 AI Copilot 方式回答營運問題
-
-MVP v1 不追求真實 EMS 控制，而是建立一個可解釋、可展示、可逐步擴充的 AI 能源營運原型。
+![CI](https://github.com/YOYU001/ai-energy-operations-copilot-1/actions/workflows/ci.yml/badge.svg)
 
 ---
 
-## 2. Product Positioning
+## Highlights
 
-本產品不是單純的 chatbot，而是：
-
-```text
-Energy Operations Dashboard + AI Copilot
-```
-
-Dashboard 負責呈現能源數據與分析結果，AI Copilot 負責解釋異常、引用文件、生成建議與協助決策。
+- **Grounded answers only.** The assistant uses internal sources by default (uploaded documents, imported CSV datasets, case records, built-in rules). When the data is insufficient it says so and lists what is missing, instead of guessing.
+- **Hybrid RAG retrieval.** Semantic search combined with date and table metadata boosts. On the document benchmark, the right passage is in the top 3 results 91% of the time.
+- **Controlled tool use.** The assistant can call 5 registered tools only, with a capability guard and hard limits (3 rounds, 5 calls) per answer.
+- **Rule-based decision support.** Anomaly diagnosis, battery scheduling, cost estimation and the Green Operations Index are deterministic and explainable.
+- **Tested end to end.** 581 automated tests, CI on every pull request (frontend lint and build, backend pytest against a real PostgreSQL + pgvector service), CodeQL and Dependabot.
 
 ---
 
-## 3. MVP v1 Scope
+## Results
 
-MVP v1 包含以下核心功能：
+### Retrieval quality
 
-1. **Energy Dashboard**
-   - PV forecast vs actual
-   - Load trend
-   - Battery SOC
-   - Battery temperature
-   - Grid import/export
-   - Electricity price
-   - Green Operations Index
+Benchmark questions with known ground-truth passages, run against 281 chunks from 3 energy research reports. Production code reproduces the prototype scores question by question, with zero regressions.
 
-2. **CSV Data Ingestion**
-   - 匯入模擬能源 time-series CSV
-   - 驗證欄位格式
-   - 儲存至 PostgreSQL
+![Retrieval Hit@k](docs/assets/rag_retrieval_hit_at_k.png)
 
-3. **Rule-based Anomaly Diagnosis**
-   - PV forecast deviation
-   - Over contract risk
-   - Low SOC risk
-   - Battery health risk
-   - Peak-period abnormal charging
-   - Battery should discharge but did not
-   - Green energy waste
+![Hybrid vs vector-only retrieval](docs/assets/rag_hybrid_vs_vector.png)
 
-4. **Battery Scheduling Suggestion**
-   - 根據 SOC、電價、負載、PV、溫度產生建議
-   - MVP v1 使用 rule-based logic，不做 optimization solver
-
-5. **Cost and Green Energy Analysis**
-   - TOU cost estimation
-   - over-contract risk estimation
-   - green energy waste estimation
-   - second-life battery bonus
-
-6. **Document Q&A / RAG**
-   - 僅回答內部文件與 approved dataset 範圍內的問題
-   - 使用 pgvector 優先，Chroma 僅作 fallback
-
-7. **AI Copilot**
-   - 回答能源營運問題
-   - 解釋異常原因
-   - 提供可執行建議
-   - 引用內部資料來源
-
----
-
-## 4. Tech Stack
-
-### Frontend
-
-```text
-Next.js
-React
-TypeScript
-```
-
-### Backend
-
-```text
-FastAPI
-Python
-```
-
-### Database
-
-```text
-PostgreSQL
-pgvector
-```
-
-### AI / RAG
-
-```text
-OpenAI API
-Embeddings
-Internal Knowledge Only RAG
-```
-
-### Data
-
-```text
-Synthetic CSV
-Taiwan energy research concepts
-Public energy dataset concepts
-```
-
----
-
-## 5. Repository Structure
-
-建議專案結構如下：
-
-```text
-ai-energy-operations-copilot/
-  frontend/
-  backend/
-  database/
-  data/
-  docs/
-    MVP_V1_SPEC.md
-    DATA_SCHEMA.md
-    DEVELOPMENT_WORKFLOW.md
-    MVP1_RULES.md
-    SAMPLE_DATA_PLAN.md
-    WORKFLOW_SHORT.md
-    CLAUDE_CODE_WORKFLOW.md
-    ENGINEERING_LOG.md
-    ANTHROPIC_LEARN_MAP.md
-    DECISIONS.md
-    OFFICIAL_UPDATE_LOG.md
-  CLAUDE.md
-  PROGRESS.md
-  README.md
-```
-
----
-
-## 6. Important Docs
-
-| File | Purpose |
+| Metric | Result |
 |---|---|
-| `CLAUDE.md` | high-level project rules for Claude Code |
-| `PROGRESS.md` | current progress, current phase, next step |
-| `docs/MVP_V1_SPEC.md` | detailed MVP v1 product scope |
-| `docs/DATA_SCHEMA.md` | dataset and database schema definitions |
-| `docs/DEVELOPMENT_WORKFLOW.md` | implementation order and workflow |
-| `docs/MVP1_RULES.md` | rule-based analysis and scheduling logic |
-| `docs/SAMPLE_DATA_PLAN.md` | synthetic demo dataset design |
-| `docs/WORKFLOW_SHORT.md` | mandatory short workflow read at every session and Step |
-| `docs/ENGINEERING_LOG.md` | actual learning, manual operation, debugging, and interview notes |
-| `docs/ANTHROPIC_LEARN_MAP.md` | mapping between project tasks and Anthropic Learn topics |
-| `docs/DECISIONS.md` | important technical decision records |
-| `docs/OFFICIAL_UPDATE_LOG.md` | reviewed Anthropic official updates and adoption decisions |
-| `docs/PROJECT_ALIGNMENT_REVIEW.md` | confirmed product definition, decision log, MVP scope, non-goals, risks, and architecture direction |
-| `docs/RAG_SPIKE_PLAN.md` | scope and validation plan for the RAG Feasibility Spike (new Step 6) |
+| Hit@1 / Hit@3 / Hit@5 (document-scoped) | 64% / 91% / 100% |
+| Hit@3 (global, all documents) | 82% |
+| Table detection in report PDFs | 14 of 18 tables |
+| Re-ingestion of unchanged documents | 0 new embedding calls, 0 duplicate chunks |
+
+### Engineering quality
+
+![Test suite growth](docs/assets/test_suite_growth.png)
+
+### Demo data
+
+The dashboard, cost and scheduling features are exercised with a representative synthetic dataset (2 sites, 26 fields, hourly).
+
+![Demo site profile](docs/assets/demo_site_profile.png)
 
 ---
 
-## 7. Required Reading for Claude Code
+## Features
 
-At the start of every Claude Code session, after `clear`, and before every new development Step, read:
+| # | Feature | What it does |
+|---|---|---|
+| 1 | Document knowledge base | Upload PDFs; parsing with OCR fallback, table-aware chunking, idempotent ingestion and blue-green chunk cutover |
+| 2 | Time-series ingestion | Validate and import energy CSV data (PV, load, battery, grid, price, weather) with a warning report |
+| 3 | Dashboard | PV forecast vs actual, load, battery SOC and temperature, grid import/export, price |
+| 4 | Anomaly diagnosis | Rule-based detection, e.g. a battery that should have discharged during peak hours but did not |
+| 5 | Similar-case search | Embedding search over past incident records |
+| 6 | Battery scheduling | Rule-based charge / discharge / idle / hold suggestions overlaid on the battery chart |
+| 7 | Cost estimation | Time-of-use cost, over-contract risk and green-energy waste |
+| 8 | Green Operations Index | Composite score of renewable use and battery health |
+| 9 | AI assistant | Chat with streaming answers, tool activity panel, regenerate and stop |
+| 10 | Analysis report | One-click report that assembles all existing analyses for a dataset |
 
-```text
-CLAUDE.md
-PROGRESS.md
-docs/WORKFLOW_SHORT.md
+---
+
+## Architecture
+
+```mermaid
+flowchart LR
+    U[User] --> FE[Next.js frontend<br/>dashboard + assistant]
+    FE -->|server-only API proxy, SSE| BE[FastAPI backend]
+    BE --> RULES[Rule engine<br/>anomaly, schedule, cost, GOI]
+    BE --> RAG[Hybrid retrieval<br/>semantic + metadata boost]
+    BE --> TOOLS[Tool orchestration<br/>5 registered tools]
+    TOOLS --> RULES
+    TOOLS --> RAG
+    BE --> LLM[OpenAI API<br/>chat + embeddings]
+    RAG --> DB[(PostgreSQL + pgvector)]
+    RULES --> DB
+    BE --> DB
 ```
 
-Before implementation, read the documents relevant to the task. For example:
+**Assistant tools:** `get_dataset_summary`, `get_dataset_timeseries`, `get_dataset_analysis`, `search_documents`, `search_similar_cases`.
 
-```text
-docs/MVP_V1_SPEC.md
-docs/DATA_SCHEMA.md
-docs/DEVELOPMENT_WORKFLOW.md
-docs/MVP1_RULES.md
-docs/SAMPLE_DATA_PLAN.md
+**Database:** plain SQL schema (`database/schema.sql`) for documents and chunks (pgvector), datasets and time series, case records, analysis runs, and conversations.
+
+---
+
+## Tech stack
+
+| Layer | Tools |
+|---|---|
+| Frontend | Next.js (App Router), React, TypeScript, Tailwind CSS, Recharts |
+| Backend | FastAPI, Python 3.11, SQLAlchemy, Pydantic |
+| Data | PostgreSQL, pgvector, pandas |
+| AI | OpenAI API (chat, embeddings), hybrid retrieval, tool calling, SSE streaming |
+| Documents | PyMuPDF, EasyOCR fallback |
+| Quality | pytest, ESLint, GitHub Actions CI, CodeQL, Dependabot |
+| Infrastructure | Docker Compose |
+
+---
+
+## Quick start
+
+**Requirements:** Docker, Python 3.11 (conda recommended), Node.js, an OpenAI API key.
+
+```bash
+# 1. Database (PostgreSQL + pgvector)
+cp .env.example .env            # set POSTGRES_PASSWORD, then add OPENAI_API_KEY=...
+docker compose up -d
+docker exec -i <container_name> psql -U ai_copilot -d ai_copilot < database/schema.sql
+
+# 2. Backend
+conda env create -f environment.yml
+conda activate AI_Copilot
+uvicorn app.main:app --reload --app-dir backend
+
+# 3. Frontend
+cd frontend
+npm ci
+npm run dev
 ```
 
-Long workflow and tracking files are read only when required by `docs/WORKFLOW_SHORT.md`, which keeps context and token use controlled.
+Run the tests from the repository root:
 
----
-
-## 8. Data Policy
-
-MVP v1 預設採用 **Internal Knowledge Only**。
-
-AI Copilot 不應自行搜尋網路，也不應編造真實台電營運資料。若資料來自模擬 CSV，必須明確視為 demo data。
-
-Allowed data sources:
-
-- synthetic CSV
-- approved internal markdown docs
-- approved internal PDF-derived notes
-- public dataset concepts if explicitly included in the repo
-
-Not allowed in MVP v1:
-
-- real EMS control
-- real-time grid operation
-- unapproved web search
-- unsupported claims about real Taipower operations
-
----
-
-## 9. MVP v1 Non-goals
-
-MVP v1 不做以下項目：
-
-- real EMS control
-- real-time hardware control
-- optimization solver
-- self-trained forecasting model
-- multi-agent system
-- production authentication system
-- large-scale cloud deployment
-- real-time streaming infrastructure
-
-這些可作為 MVP v2 或 future work。
-
----
-
-## 10. Demo Value
-
-這個專案展示的能力包含：
-
-- AI application system design
-- RAG pipeline design
-- structured energy data analysis
-- rule-based decision support
-- dashboard product thinking
-- FastAPI + Next.js full-stack MVP
-- PostgreSQL + pgvector integration
-- domain-aware AI Copilot design
-
----
-
-## 11. Current Status
-
-Current phase:
-
-```text
-Step 5: Dataset API completed
-Project Alignment Review completed
-Next: New Step 6 — RAG Feasibility Spike
+```bash
+pytest
 ```
 
-Completed foundations include:
+---
 
-- Project skeleton
-- FastAPI backend with health and version endpoints
-- PostgreSQL + pgvector through Docker
-- Initial seven-table database schema
-- Database connectivity check
-- CSV upload, validation, type conversion, warning report, and PostgreSQL insertion
-- Dataset API: GET /datasets, GET /datasets/{dataset_id}, GET /datasets/{dataset_id}/summary, GET /datasets/{dataset_id}/timeseries, with dependency-injected database access and 36 passing tests
+## Repository structure
 
-A five-phase Project Alignment Review confirmed the product stays energy-vertical (Energy Operations Dashboard + AI Assistant for EMS engineers), locked in the first end-to-end scenario (`BATTERY_SHOULD_DISCHARGE_BUT_DID_NOT`), and reordered the roadmap to validate RAG/OCR feasibility before Frontend/Dashboard work. Full record: `docs/PROJECT_ALIGNMENT_REVIEW.md`.
+```text
+backend/     FastAPI app, services (RAG, rules, assistant), tests
+frontend/    Next.js dashboard and assistant UI
+database/    SQL schema
+data/        synthetic demo dataset, sample case records, demo documents
+spike/       RAG feasibility prototype and benchmark reports
+docs/        specifications, decisions, plans and validation reports
+scripts/     utility scripts
+```
 
-The next implementation Step is a small, bounded RAG Feasibility Spike (not full production RAG), validating PDF parsing, OCR, chunking, retrieval accuracy, and citation accuracy on a handful of real non-confidential documents. Full plan: `docs/RAG_SPIKE_PLAN.md`.
+Key documents: [MVP spec](docs/MVP_V1_SPEC.md) · [Data schema](docs/DATA_SCHEMA.md) · [Rules](docs/MVP1_RULES.md) · [Technical decisions](docs/DECISIONS.md) · [RAG plan and benchmark](docs/RAG_SPIKE_PLAN.md) · [AI evaluation roadmap](docs/AI_EVALUATION_ROADMAP.md)
 
-See `PROGRESS.md` for the latest verified project state.
+---
+
+## Data
+
+- **Time series:** `data/representative_synthetic_energy_operations_timeseries.csv` is synthetic demo data and does not represent any real site.
+- **Documents:** the RAG benchmark uses publicly available energy research reports.
+- **Scope:** the system does not control real EMS equipment, run real-time grid operations or search the web.
+
+---
+
+## Status
+
+9 of the 10 planned features are complete and verified. The role-based answer mode works in the backend (`role_mode`); its frontend selector is next.
+
+Out of scope for this version: real EMS control, optimization solvers, self-trained forecasting models, multi-agent architecture, and real power-trading integration.

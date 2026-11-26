@@ -523,7 +523,7 @@ MVP v1 does not provide:
 MVP v1 provides:
 
 - explainable rule-based analysis
-- portfolio demo dashboard
+- demo dashboard
 - internal document Q&A
 - CSV-based energy operation insights
 - scheduling suggestions for human review

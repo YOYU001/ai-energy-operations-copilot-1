@@ -2,7 +2,7 @@
 
 ## 核心學習方向
 
-本學習 Roadmap 將以 **NVIDIA 官方在 AI Evaluation、Benchmarking、RAG Evaluation、Agent Evaluation 與 Performance Benchmarking 所採用的主流方法論與工具** 作為主要學習目標。
+本 Roadmap 參考業界（包含 NVIDIA 官方）在 AI Evaluation、Benchmarking、RAG Evaluation、Agent Evaluation 與 Performance Benchmarking 所採用的主流方法論與工具** 作為主要學習目標。
 
 學習重點不是單純去比較「哪個模型贏、哪套工具好」，而是逐步建立一套可以長期沿用、重複使用、並能實際支援 AI 導入決策的 Evaluation 方法論與自動化系統。
 
@@ -129,7 +129,7 @@ Adopt / Conditional / Reject
 |---|---|
 | **Current baseline** | 已在 `main` 實作、可直接執行，並已有記錄過的基準數字。新的評測工作要「接續」而不是「重造」這些。 |
 | **Planned work** | 尚未實作、但屬於本 MVP v1 evaluation 範圍、預計要補的項目。 |
-| **Non-MVP reference** | 獨立的未來 portfolio 專案或純學習參考。**不是本 repo 的 acceptance gate，不得阻擋 MVP v1 的完成判定。** |
+| **Non-MVP reference** | 獨立的未來專案或純參考。**不是本 repo 的 acceptance gate，不得阻擋 MVP v1 的完成判定。** |
 
 ### 目前的 Current baseline 一覽（`main` 上已可執行）
 
@@ -259,7 +259,7 @@ Project benchmark 告訴你：
 
 ---
 
-# 4. NVIDIA Evaluation 主線
+# 4. Evaluation 工具主線
 
 ## 4.1 NVIDIA NeMo Evaluator
 
@@ -511,81 +511,6 @@ https://docs.nvidia.com/nemo/gym/main/about/concepts/evaluation
 Benchmarks：
 
 https://docs.nvidia.com/nemo/gym/main/evaluation/benchmarks
-
----
-
-# 9. 官方 NVIDIA 教學影片
-
-## Video 1 — 第一支必看
-
-### Evaluate LLMs with NeMo Evaluator and Docker Compose | Step-by-Step Setup Guide
-
-NVIDIA Developer 官方：
-
-https://www.youtube.com/watch?v=Fo9kNJE5nC8
-
-內容包含：
-
-- Docker Compose
-- NeMo Evaluator
-- Evaluation Job
-- Python SDK
-- Custom Metric
-- String Matching
-- LLM-as-a-Judge
-- Jupyter Notebook Demo
-
-建議：
-
-**第一次接觸 NeMo Evaluator 就從這支開始。**
-
----
-
-## Video 2 — Agent Evaluation
-
-### Scale AI Agent Evaluation with NVIDIA NeMo Evaluator LLM-as-a-Judge
-
-NVIDIA Developer 官方：
-
-https://www.youtube.com/watch?v=IDXWrlWKr4c
-
-內容：
-
-- NeMo Evaluator
-- LLM-as-a-Judge
-- Agent Evaluation
-- NVIDIA NIM
-- Kubernetes / NIM Operator
-- Prometheus
-- Multi-GPU scaling
-
-這是屬於進階內容。
-
-建議在熟悉基本 Model Evaluation 後再看。
-
----
-
-# 10. NVIDIA 免費學習資源
-
-## NVIDIA Self-Paced Training
-
-https://www.nvidia.com/en-us/training/self-paced-courses/
-
-課程：
-
-- Generative AI
-- LLM
-- RAG
-- Deployment
-- Accelerated Computing
-
-建議不要一次修大量課程。
-
-以目前目標：
-
-> Evaluation → RAG Evaluation → Performance → Agent Evaluation
-
-為主線即可。
 
 ---
 
@@ -978,7 +903,7 @@ FAIL
 
 # Phase 10 — AI Evaluation Lab / EvalCore  ·  **Non-MVP reference**
 
-> **範圍界定**：本 Phase 描述的「AI Evaluation Lab / EvalCore」是一個**獨立的未來 portfolio 專案**，不是 AI Energy Operations Copilot 這個 repo 的一部分。它**不是本專案的 acceptance gate，不得阻擋 MVP v1 的完成判定**。放在這裡只作為長期方向參考；本專案實際要交付的評測範圍以 Phase 5 / Phase 6 / Phase 9 的 **Planned work** 為準。
+> **範圍界定**：本 Phase 描述的「AI Evaluation Lab / EvalCore」是一個**獨立的未來專案**，不是 AI Energy Operations Copilot 這個 repo 的一部分。它**不是本專案的 acceptance gate，不得阻擋 MVP v1 的完成判定**。放在這裡只作為長期方向參考；本專案實際要交付的評測範圍以 Phase 5 / Phase 6 / Phase 9 的 **Planned work** 為準。
 
 最終架構（EvalCore 專案的願景，非本 repo 待辦）：
 
@@ -1372,7 +1297,7 @@ Quality Gates
 Dashboard
 ```
 
-它會是一個**獨立的 Portfolio Project**，可作為其他 AI 專案共用的 Evaluation Infrastructure —— 但那是另一個 repo 的事，本專案的評測交付範圍以 Phase 5 / 6 / 9 的 Planned work 為界。
+它會是一個**獨立專案**，可作為其他 AI 專案共用的 Evaluation Infrastructure —— 但那是另一個 repo 的事，本專案的評測交付範圍以 Phase 5 / 6 / 9 的 Planned work 為界。
 
 ---
 

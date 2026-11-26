@@ -42,7 +42,7 @@ Sources（查證時使用的官方來源）：
 
 | 項目 | 決策 | 理由 |
 |---|---|---|
-| TypeScript | 採用 | API 回傳有明確 Pydantic schema（`backend/app/schemas.py`），前端用 TS 定義對應 interface 可及早抓到欄位對不上的錯誤；業界標準實踐，適合作品集呈現 |
+| TypeScript | 採用 | API 回傳有明確 Pydantic schema（`backend/app/schemas.py`），前端用 TS 定義對應 interface 可及早抓到欄位對不上的錯誤；業界標準實踐 |
 | App Router | 採用（非 Pages Router） | Next.js 現行主流、資料夾結構即路由，天然適合本專案多頁面（Overview/Datasets/Documents/Analysis/Assistant）需求；且 Server Component 資料抓取模式（見第 4 節）只有 App Router 支援 |
 | Tailwind CSS | 採用 | `create-next-app` 官方 scaffold 原生整合，設定成本低，不需要額外裝大型 UI library 就能做出一致骨架；呼應「避免過度依賴大型套件」與 `docs/DEVELOPMENT_WORKFLOW.md` 第 9 節「不要過早美化 UI」 |
 | UI Library（Radix/shadcn/MUI/AntD 等） | **暫不導入** | Tailwind 本身已足夠做出乾淨骨架；提早引入會增加 bundle size、學習曲線與維護成本。等未來真的需要複雜元件（Modal/DataTable/Toast）時再評估輕量方案 |

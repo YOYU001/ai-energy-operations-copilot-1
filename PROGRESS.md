@@ -7,12 +7,12 @@
 Step 5 已完成 → Project Alignment Review 已完成 → Step 6：RAG Document Ingestion Spike 已正式結案（Go，8 個 sub-step 全數完成，結案紀錄見 docs/RAG_SPIKE_PLAN.md §18）→ Step 7：Frontend Foundation 驗收通過 → Step 8：Dashboard Charts 驗收通過 → Step 9：Rule-Based Anomaly Diagnosis 驗收通過 → Step 10：Knowledge Base / RAG（正式版）8 個 sub-step 全數完成並正式結案 → Step 11：Case Similarity — backend、frontend 均已完成並驗收通過 → Step 12：AI Assistant / Chat UI — backend（Sub-step 1–3C）與 frontend（Slice 1–5）均已完成並驗收通過，PR #46 已 merge 進 main → Step 13.2–13.6：battery scheduling／cost estimation／green operations index 三組規則、API 與 Dashboard（Cost + Green Ops）均已完成並 merge 進 main（PR #53，commit 8d6672a）→ Step 13.7：以 synthetic fixtures 完成端對端驗證，結論 `synthetic validation complete` → **Step 13.8：Battery Scheduling frontend UI 已完成並以真實瀏覽器驗證（golden path／多場域跳過／空資料集三種情境）**。Cost／Green Ops／Battery Scheduling 三者現在都達到 `API + dashboard synthetic validation` → **Step 14：Analysis Report 已完成（backend + frontend + 測試 + 真實瀏覽器驗證三情境）**。Step 14 完成後，MVP v1 十項功能中僅「角色化回答模式」（Scope 第 9 項）的 frontend selector 尚未實作（backend `role_mode` 欄位已存在可用）。下一步：role mode selector frontend UI。
 
 ## Completed
-- 定義 MVP v1 產品範圍、技術棧、Internal Knowledge Only 原則、初版 data schema，以及 Claude Code step-by-step / 漸進式開發流程。
+- 定義 MVP v1 產品範圍、技術棧、Internal Knowledge Only 原則、初版 data schema，以及 Claude Code 漸進式開發流程。
 - 建立專案骨架資料夾（frontend/、backend/、database/、data/、scripts/）。
 - 實作最小版 FastAPI backend，含 GET /health 與 GET /version。
 - 實作資料庫基礎建設：透過 Docker 部署 PostgreSQL + pgvector、初版 7 張表的 schema（database/schema.sql）、SQLAlchemy 連線、GET /db-check。
 - Step 4 — Dataset Ingestion：POST /datasets/upload（CSV 驗證、型別轉換、警告報告、寫入 datasets/energy_timeseries）。新增 ems_mode/equipment_status 的 canonical enum 驗證（詳見 docs/DECISIONS.md ADR-001）。6 個測試通過。
-- 在 docs/WORKFLOW_SHORT.md 定義「Step Walkthrough」與「執行與教學必須分離」的流程規則（單一標準 7 步驟工作流程：plan → confirm → execute → test → report → confirm → teach）。
+- 在 docs/WORKFLOW_SHORT.md 定義「Step Walkthrough」與「執行與說明分離」的流程規則（單一標準 7 步驟工作流程：plan → confirm → execute → test → report → confirm → walkthrough）。
 - Step 5 — Dataset API：GET /datasets、/datasets/{id}、/datasets/{id}/summary、/datasets/{id}/timeseries，建立在可測試的 DI-based db connection 之上。共 36 個測試通過。已對實際 dev 資料庫驗證。
 - 在 Step 6 開始前完成五階段 Project Alignment Review（確認能源垂直領域範圍、鎖定 16 項產品／架構決策、重新排序 Step 6–13 roadmap）。完整紀錄見 docs/PROJECT_ALIGNMENT_REVIEW.md。
 - Step 6 Sub-step 1 — Test Corpus and Evaluation Set：選定 4 份 spike PDF，草擬 17 題固定測試問題（spike/test_questions.json）作為評估基準。詳見 docs/RAG_SPIKE_PLAN.md。
@@ -106,7 +106,7 @@ MVP v1 應涵蓋：
 - 尚無防止重複上傳的機制。
 - 目前的 batch insert 方式適用於 MVP 規模的資料集，但尚未針對大量資料 ingestion 做 benchmark 或優化。
 - `DOCUMENTATION_FIX_REPORT.md` 與 `VALIDATION_RESULTS.md` 仍留在 repository 根目錄；暫時保留，待之後決定是否歸檔或移除。
-- Repository 尚未初始化為 git repository；git 初始化規劃為獨立、完整教學過的一個 Step，而非附帶在其他 Step 裡順便做。
+- Repository 尚未初始化為 git repository；git 初始化規劃為獨立的一個 Step，而非附帶在其他 Step 裡順便做。
 - 尚無針對真實資料庫的自動化整合測試（Step 5 的測試使用 fake connection）；列為獨立後續項目，不屬於 Step 5 或 RAG spike 的範圍。
 - Data lifecycle 欄位（status/version/effective_from/effective_until/archived_at/deleted_at/superseded_by/retention_until）已確認可在不需大改的情況下加入 schema，但尚未加入；時機留待實際需要時再處理。
 - 詳細風險與盲點（幻覺、citation 準確性、OCR 品質、confidence 門檻、成本等）已記錄於 `docs/PROJECT_ALIGNMENT_REVIEW.md` 第 6 節，此處不重複列出。

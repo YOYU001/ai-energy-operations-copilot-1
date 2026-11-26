@@ -8,7 +8,7 @@
 
 Step 13 Sub-step 13.5 建立的示範用能源時間序列資料,人工合成,用於驗證
 Cost Comparison（13.5）與 Green Operations Index（13.6）的 UI／圖表,
-以及未來 portfolio demo。**不代表任何真實場域,不能作為 Sub-step 13.7
+以及未來 demo。**不代表任何真實場域,不能作為 Sub-step 13.7
 real-world dataset validation 的依據。**
 
 - 2 個站點（`site_001`、`site_002`),各 49 筆整點資料(2026-03-01 00:00
